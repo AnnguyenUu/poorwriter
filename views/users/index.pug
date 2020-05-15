@@ -13,14 +13,18 @@ block content
     
   table.table
     tr
+      th 
       th Name
       th Gender
       th Age
-      th Actions        
+      th Actions     
     each user in users
       tr
+        td
+          img(class="img-user--avatar",src=user.avatar)
         td= user.name
         td= user.gender
         td= user.age
         td
           a.btn.btn-light(href="/users/" + user.id) View
+        

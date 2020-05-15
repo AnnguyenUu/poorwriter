@@ -12,6 +12,9 @@ const controller = require("../controller/user.controller")
 const validate = require("../validate/user.validate")
 // middleware login
 const authMiddleWare = require("../middleware/auth.middleware")
+// multer validate
+let multer = require("multer")
+let upload = multer({ dest: './public/uploads/' })
 
 router.get('/', controller.index)
 
@@ -28,7 +31,11 @@ router.get('/search', controller.search)
 router.get('/create', controller.create)
 
 // post
-router.post('/create', validate.postCreate, controller.postCreate)
+router.post('/create',
+  upload.single('avatar'),
+  validate.postCreate,
+  controller.postCreate
+);
 
 //get
 router.get('/:id', controller.get)

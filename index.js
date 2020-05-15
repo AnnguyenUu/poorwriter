@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express')
 const app = express()
 // router
@@ -13,7 +14,7 @@ app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 // cookie parser
-app.use(cookieParser());
+app.use(cookieParser(process.env.SESSION_SECRET));
 
 // template engine
 app.set('view engine', 'pug')
