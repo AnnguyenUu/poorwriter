@@ -2,3 +2,7 @@
 a.users-button {
     /* height: 50%; */
 }
+.img-user--avatar {
+    width: 90px;
+    height: 90px;
+}

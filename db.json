@@ -1,56 +1,12 @@
 {
   "users": [
     {
-      "name": "Ngô Thanh Xuân",
-      "gender": "Male",
-      "age": "29",
-      "id": "BQO9gx_5u"
-    },
-    {
       "name": "Nguyễn Thanh An",
       "gender": "Male",
       "age": "26",
       "id": "AjO9NMrrg",
       "email": "annguyenthanh294@gmail.com",
       "password": "e10adc3949ba59abbe56e057f20f883e"
-    },
-    {
-      "name": "Phùng Duy",
-      "gender": "Male",
-      "age": "32",
-      "id": "T68FmUK5g"
-    },
-    {
-      "name": "Phạm Ngọc Hòa",
-      "gender": "Male",
-      "age": "27",
-      "id": "9jUI3SQa1"
-    },
-    {
-      "name": "Đàm Thị Thanh Sương",
-      "gender": "Female",
-      "age": "25",
-      "id": "R8683-xiX"
-    },
-    {
-      "name": "Nguyễn Tích Lê",
-      "gender": "Male",
-      "age": "26",
-      "id": "I4MTbsTdb"
-    },
-    {
-      "name": "Michael",
-      "gender": "Male",
-      "age": "18",
-      "id": "f1ybVjJpH",
-      "avatar": "public\\uploads\\e25c77f1df24bd7e783a4c71ce6c5679"
-    },
-    {
-      "name": "Michael",
-      "gender": "Male",
-      "age": "18",
-      "id": "YUsWM-Nxt",
-      "avatar": "public\\uploads\\2403b77b80df1735796756587ac618f5"
     }
   ]
 }
