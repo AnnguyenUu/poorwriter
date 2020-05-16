@@ -30,7 +30,7 @@ app.get('/', function (req, res) {
   res.render('index');
 })
 
-app.use(express.static('public'))
+app.use('/public',express.static('public'))
 // login
 app.use('/auth', authRoute)
 // user list

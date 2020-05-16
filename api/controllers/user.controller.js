@@ -25,7 +25,7 @@ module.exports.create = async (req, res) => {
 }
 
 module.exports.postCreate = async (req, res) => {
-  req.body.avatar = req.file.path.replace(/\\/g, "/").substring("public".length)
+  req.body.avatar = req.file.path.replace(/\\/g, "/").split("/").slice(3).join("/")
   let newUser = await User.create(req.body)
   // res.json(newUser)
   res.redirect('/users')
