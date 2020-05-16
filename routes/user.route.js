@@ -18,7 +18,6 @@ let upload = multer({ dest: './public/uploads/' })
 
 router.get('/', controller.index)
 
-
 router.get('/cookie', function (req, res, next) {
   res.cookie('user-id', 12345);
   res.send('Cookie need milk');

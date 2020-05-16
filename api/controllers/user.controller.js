@@ -1,11 +1,23 @@
+
+const express = require('express')
+const bodyParser = require('body-parser');
+const app = express()
 let User = require("../../models/user.model");
 const mongoose = require('mongoose');
 let ObjectId = mongoose.Types.ObjectId;
-let _ = require('lodash');
+
+// parse application/json 
+app.use(bodyParser.json());
+
+// parse application/x-www-form-urlencoded 
+app.use(bodyParser.urlencoded({ extended: false }));
 
 module.exports.index = async (req, res) => {
   let users = await User.find();
-  res.json(users)
+  // res.json(users)
+  res.render('users/index', {
+    users: users
+  })
 }
 
 module.exports.create = async (req, res) => {
@@ -13,8 +25,10 @@ module.exports.create = async (req, res) => {
 }
 
 module.exports.postCreate = async (req, res) => {
+  req.body.avatar = req.file.path.replace(/\\/g, "/").substring("public".length)
   let newUser = await User.create(req.body)
-  res.json(newUser)
+  // res.json(newUser)
+  res.redirect('/users')
 }
 
 module.exports.get = async (req, res) => {
