@@ -2,7 +2,11 @@
 a.users-button {
     /* height: 50%; */
 }
+form.edit-information input.form-control {
+    width: 50%;
+}
 .img-user--avatar {
-    width: 90px;
-    height: 90px;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
 }

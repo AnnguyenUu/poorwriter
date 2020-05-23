@@ -2,12 +2,26 @@ extends ../layouts/common.pug
 
 block content
   h1 User
-  table.table
-    tr
-      th Name
-      th Gender
-      th Age
-    tr
-      td= user.name
-      td= user.gender
-      td= user.age
+  .row
+    .col-md-12
+      form(action=`/users/${user.id}?_method=PUT`, enctype="multipart/form-data",class="edit-information", method="post")
+        .form-group
+          label(for="name") Name
+          input#name(type="text", name="name", value= user ? user.name : "", class="form-control")
+
+        .form-group
+          label(for="name") Gender
+          input#gender(type="text", name="gender", value= user ? user.gender : "", class="form-control")
+
+        .form-group
+          label(for="age") Age
+          input#age(type="text", name="age", value= user ? user.age : "", class="form-control")
+
+        .form-group
+          label(for="avatar") Avatar
+          input#avatar(name="avatar", type="file", value = user ? user.avatar : "", class="form-control-file") 
+        
+        button(class="btn btn-info") Edit
+  .d-flex
+    form(action=`/users/${user.id}?_method=DELETE`, method="post")
+      button(class="btn btn-danger") Delete

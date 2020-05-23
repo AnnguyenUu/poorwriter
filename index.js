@@ -13,6 +13,10 @@ mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopol
 let apiUserRoute = require("./api/routes/user.route")
 let authMiddleWare = require("./middleware/auth.middleware")
 
+// over ride
+
+const methodOverride = require('method-override')
+
 //use
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
@@ -20,6 +24,10 @@ app.use(express.urlencoded({ extended: true })) // for parsing application/x-www
 app.use('/api/users', apiUserRoute)
 // cookie parser
 app.use(cookieParser(process.env.SESSION_SECRET));
+
+// use over ride 
+
+app.use(methodOverride("_method"))
 
 // template engine
 app.set('view engine', 'pug')

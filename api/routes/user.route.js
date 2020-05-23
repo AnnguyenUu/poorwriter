@@ -11,10 +11,10 @@ const authMiddleWare = require("../../middleware/auth.middleware")
 const multer = require('multer');
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-      cb(null, 'public/uploads/')
+    cb(null, 'public/uploads/')
   },
   filename: function (req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now())
+    cb(null, file.fieldname + '-' + Date.now())
   }
 })
 
@@ -28,9 +28,13 @@ router.post('/',
   upload.single('avatar'),
   controller.postCreate)
 
+router.get('/search', controller.search)
+
 router.get('/:id', controller.get)
 
-router.put('/:id', controller.update)
+router.put('/:id',
+  upload.single('avatar'),
+  controller.update)
 
 router.delete('/:id', controller.delete)
 

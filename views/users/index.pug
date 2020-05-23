@@ -8,12 +8,12 @@ block content
 
   .d-flex
     form.ml-auto(action="/users/search", method="get", class="d-flex")
-      input(type="text", name="q", value=q, class="form-control")
+      input(type="search", name="q", value=q, class="form-control")
       button(class="btn btn-primary") Search
     
   table.table
     tr
-      th 
+      th Avatar
       th Name
       th Gender
       th Age
