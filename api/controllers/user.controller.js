@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const app = express()
 let User = require("../../models/user.model");
 const mongoose = require('mongoose');
+const paginate = require('express-paginate');
 let ObjectId = mongoose.Types.ObjectId;
 
 // parse application/json 
@@ -12,17 +13,22 @@ app.use(bodyParser.json());
 // parse application/x-www-form-urlencoded 
 app.use(bodyParser.urlencoded({ extended: false }));
 
+
 module.exports.index = async (req, res) => {
-  let { page = 1, limit = 5 } = req.query
+  const { limit = 5 } = req.query;
+  let page = req.query.page || 1;
   let users = await User.find()
-  .limit(limit * 1)
-  .skip((page - 1)* limit)
-  .exec();
+    .limit(limit * 1)
+    .skip((page - 1) * limit)
+    .exec();
   const count = await User.countDocuments();
-  res.render('users/index', {
+  let pageCount = Math.ceil(count / limit)
+  let pages = paginate.getArrayPages(req)(3, pageCount, page)
+  res.render('users/index' , {
     users: users,
-    totalPages: Math.ceil(count / limit),
-    currentPage: page
+    pageCount,
+    count,
+    pages: pages
   })
 }
 
@@ -43,7 +49,7 @@ module.exports.create = async (req, res) => {
 
 module.exports.postCreate = async (req, res) => {
   req.file !== undefined ?
-  req.body.avatar = req.file.path.replace(/\\/g, "/").substring("public".length) : req.body.avatar = "/uploads/defaultAvatar.png" 
+    req.body.avatar = req.file.path.replace(/\\/g, "/").substring("public".length) : req.body.avatar = "/uploads/defaultAvatar.png"
   let newUser = await User.create(req.body)
   // res.json(newUser)
   res.redirect('/users')
@@ -51,7 +57,6 @@ module.exports.postCreate = async (req, res) => {
 
 module.exports.get = async (req, res) => {
   let id = req.params.id
-  let query = req.query.q
   let o_id = new ObjectId(id)
   let foundUser = await User.findOne({ _id: o_id })
   res.render('users/view', {
@@ -73,9 +78,9 @@ module.exports.delete = async (req, res) => {
 }
 
 module.exports.update = async (req, res) => {
-  
+
   req.file !== undefined ?
-  req.body.avatar = req.file.path.replace(/\\/g, "/").substring("public".length) : req.body.avatar
+    req.body.avatar = req.file.path.replace(/\\/g, "/").substring("public".length) : req.body.avatar
 
   let mongo_id = new ObjectId(req.params.id)
 

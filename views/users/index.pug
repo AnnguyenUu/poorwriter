@@ -27,4 +27,20 @@ block content
         td= user.age
         td
           a.btn.btn-light(href="/users/" + user.id) View
-        
+  
+    if paginate.hasPreviousPages || paginate.hasNextPages(pageCount)
+  nav.Page.navigation
+    ul.pagination
+      if paginate.hasPreviousPages
+        li.page-item
+          a(href=paginate.href(true)).page-link
+            i.fa.fa-arrow-circle-left
+            |  Previous
+      if pages
+        each page in pages
+         a.btn.btn-default.page-link(href=page.url)= page.number
+      if paginate.hasNextPages(pageCount)
+        li.page-item
+          a(href=paginate.href()).page-link
+            | Next&nbsp;
+            i.fa.fa-arrow-circle-right

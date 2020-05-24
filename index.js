@@ -9,7 +9,7 @@ const authRoute = require("./routes/auth.route")
 // mongo
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
-
+const paginate = require('express-paginate');
 let apiUserRoute = require("./api/routes/user.route")
 let authMiddleWare = require("./middleware/auth.middleware")
 
@@ -32,6 +32,9 @@ app.use(methodOverride("_method"))
 // template engine
 app.set('view engine', 'pug')
 app.set('views', './views')
+
+
+app.use(paginate.middleware(10, 50));
 
 // execute
 app.get('/', function (req, res) {
