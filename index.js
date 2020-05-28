@@ -34,7 +34,7 @@ app.set('view engine', 'pug')
 app.set('views', './views')
 
 
-app.use(paginate.middleware(10, 50));
+app.use(paginate.middleware(5, 50));
 
 // execute
 app.get('/', function (req, res) {
