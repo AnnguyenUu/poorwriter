@@ -12,7 +12,7 @@ mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopol
 const paginate = require('express-paginate');
 let apiUserRoute = require("./api/routes/user.route")
 let authMiddleWare = require("./middleware/auth.middleware")
-
+let helpers = require("./helpers/auth.helpers")
 // over ride
 
 const methodOverride = require('method-override')
@@ -33,7 +33,6 @@ app.use(methodOverride("_method"))
 app.set('view engine', 'pug')
 app.set('views', './views')
 
-
 app.use(paginate.middleware(5, 50));
 
 // execute
@@ -45,6 +44,6 @@ app.use(express.static('public'))
 // login
 app.use('/auth', authRoute)
 // user list
-app.use('/users', authMiddleWare.requireAuth, apiUserRoute);
-
+// app.use('/users', authMiddleWare.requireAuth, apiUserRoute);
+app.use('/users', helpers.requireAuth, apiUserRoute);
 app.listen(3000)
