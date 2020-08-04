@@ -1,20 +1,22 @@
 let jwt = require('jsonwebtoken');
 require('dotenv').config();
 const { secretOrKey } = require('../controller/key');
-let Buffer = require('buffer/').Buffer
 
 module.exports.requireAuth = (req, res, next) => {
-  const token = req.headers.authorization;
+  
+  const token = req.cookies['authorization'] || req.headers.authorization;
+
+  if(!token) {
+    res.redirect('/auth/login');
+    return;
+  }
 
   const tokenAuth = token.substring("JWT ".length)
   if (!tokenAuth) {
     res.sendStatus(403).send('Unauthorized');
   }
-  // jwt.verify(tokenAuth, new Buffer( secretOrKey, 'base64' ), { algorithms: ['HS256'] }, (err, payload) => {
-  //   return payload
-  // })
   try {
-    const decoded = jwt.verify(tokenAuth, secretOrKey);
+    const decoded = jwt.verify(tokenAuth, secretOrKey, { algorithms: ['HS256'] },);
     req.user = decoded
     next()
   } catch (err) {

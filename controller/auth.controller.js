@@ -1,5 +1,5 @@
 const md5 = require('md5')
-const db = require("../db")
+let User = require("../models/user.model");
 let jwt = require('jsonwebtoken');
 require('dotenv').config();
 const { secretOrKey } = require('./key');
@@ -8,10 +8,11 @@ module.exports.login = (req, res) => {
   res.render('auth/login')
 }
 
-module.exports.postLogin = (req, res) => {
+module.exports.postLogin = async (req, res) => {
   let email = req.body.email
   let password = req.body.password
-  let user = db.get('users').find({ email: email }).value()
+
+  let user = await User.findOne({ email: email })
 
   if (!user) {
     res.render("auth/login", {
@@ -23,7 +24,7 @@ module.exports.postLogin = (req, res) => {
     return;
   }
 
-  let hashedPassword = md5(password);
+  let hashedPassword = (password);
 
   if (user.password !== hashedPassword) {
     res.render('auth/login', {
@@ -37,12 +38,6 @@ module.exports.postLogin = (req, res) => {
 
   const token = jwt.sign({ userId: user.id }, secretOrKey)
   
-  res.status(200).json({
-    userId: user.id,
-    token: token
-})
-  // res.cookie('userId', user.id, {
-  //   signed: true
-  // })
-  // res.redirect('/users')
+  res.cookie('authorization', 'JWT ' +  token, { httpOnly: true })
+  res.redirect('/users')
 }
